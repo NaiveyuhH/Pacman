@@ -36,13 +36,14 @@ public class AlphaBeta_Controller extends Controller{
                     }
                     m = tempMove;
                 }
+                //bestMove = m;
                 return m;
             }
 
         }
 
-//        System.out.println("High Score: " + alphaScore + ", High Move:" + bestMove);
         bestMove = allMoves[rnd.nextInt(5)];
+        System.out.println("High Score: " + tempScore + ", High Move:" + bestMove);
         return bestMove;
 
     }
@@ -69,10 +70,11 @@ public class AlphaBeta_Controller extends Controller{
                 int tempScore = BetaMove(gameAtM, depth - 1, alpha, beta, timeDue);
 
                 bestScore = Math.max(bestScore, tempScore);
-                if(bestScore  >= beta) {
+
+                alpha = Math.max(bestScore, alpha);
+                if(alpha  >= beta) {
                     return bestScore;
                 }
-                alpha = Math.max(bestScore, alpha);
             }
             return bestScore;
         }
@@ -117,11 +119,12 @@ public class AlphaBeta_Controller extends Controller{
                     int tempScore = AlphaMove(gameAtM, depth - 1, tempAlpha, tempBeta, timeDue);
 
                     bestScore = Math.min(bestScore, tempScore);
-                    if (bestScore <= tempAlpha) {
+
+                    tempBeta = Math.min(tempBeta, bestScore);
+                    if (tempBeta <= tempAlpha) {
                         bestScores.add(bestScore);
                         break;
                     }
-                    tempBeta = Math.min(tempBeta, bestScore);
                 }
                 // change the final beta
                 beta = Math.min(beta, tempBeta);
@@ -144,8 +147,8 @@ public class AlphaBeta_Controller extends Controller{
             int pac2ghostDist = game.getShortestPathDistance(pacIndex, ghostIndex);
             value = Math.min(pac2ghostDist, value);
         }
-        if(value < 20) {
-            value = score - value;
+        if(value < 100) {
+            value = score + value;
         } else {
             value = score;
         }

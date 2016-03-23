@@ -142,7 +142,7 @@ public class AlphaBetaGhosts extends Controller<EnumMap<Constants.GHOST,Constant
                     bestScores.add(bestScore);
                 }
             }
-            return Collections.max(bestScores);
+            return Collections.min(bestScores);
         }
     }
 
@@ -156,8 +156,8 @@ public class AlphaBetaGhosts extends Controller<EnumMap<Constants.GHOST,Constant
             int pac2ghostDist = game.getShortestPathDistance(pacIndex, ghostIndex);
             value = Math.min(pac2ghostDist, value);
         }
-        if(value < 20) {
-            value = score - value;
+        if(value < 100) {
+            value = score + value;
         } else {
             value = score;
         }
