@@ -26,7 +26,7 @@ import static pacman.game.Constants.*;
  * 4 moves for the ghosts. It then updates the positions of all characters, check whether pills or power
  * pills have been eaten and updates the game state accordingly.
  * 
- * All other methods are to access the gamestate and to compute numerous aspects such as directions to taken
+ * All other methods are to access the gamestate and to computce numerous aspects such as directions to taken
  * given a target or a shortest path from a to b. All shortest path distances from any node to any other node
  * are pre-computed and loaded from file. This makes these methods more efficient. Note about the ghosts: ghosts
  * are not allowed to reverse. Hence it is not possible to simply look up the shortest path distance. Instead,
@@ -349,12 +349,27 @@ public final class Game
 	 * @param ghostMoves The moves supplied by the ghosts controller
 	 */	
 	public void advanceGame(MOVE pacManMove,EnumMap<GHOST,MOVE> ghostMoves)
-	{		
+	{
+
 		updatePacMan(pacManMove);
 		updateGhosts(ghostMoves);	
 		updateGame();
+
 	}
-	
+
+	public void advanceGameWithWriter(MOVE pacManMove,EnumMap<GHOST,MOVE> ghostMoves)
+	{
+		// record the game states
+		DataWriter r = new DataWriter();
+		r.printGameInfo(this, pacManMove);
+
+		updatePacMan(pacManMove);
+		updateGhosts(ghostMoves);
+		updateGame();
+
+	}
+
+
 	public void advanceGameWithoutReverse(MOVE pacManMove,EnumMap<GHOST,MOVE> ghostMoves)
 	{		
 		updatePacMan(pacManMove);
